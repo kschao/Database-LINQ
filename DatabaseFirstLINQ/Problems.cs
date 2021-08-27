@@ -16,25 +16,25 @@ namespace DatabaseFirstLINQ
         public void runlinqqueries()
         {
             //problemone();
-//            //problemtwo();
-//            //problemthree();
-//            //problemfour();
-//            //problemfive();
-//            //problemsix();
-//            //problemseven();
-//            //problemeight();
-//            //problemnine();
-//            //problemten();
-//            //problemeleven();
-//            //problemtwelve();
-//            //problemthirteen();
-//            //problemfourteen();
-//            //problemfifteen();
-//            //problemsixteen();
-//            //problemseventeen();
-//            //problemeighteen();
-//            //problemnineteen();
-//            //problemtwenty();
+            //problemtwo();
+            //problemthree();
+            //problemfour();
+            //problemfive();
+            //problemsix();
+            //problemseven();
+            //problemeight();
+            //problemnine();
+            //problemten();
+            //problemeleven();
+            //problemtwelve();
+            //problemthirteen();
+            //problemfourteen();
+            //problemfifteen();
+            //problemsixteen();
+            //problemseventeen();
+            //problemeighteen();
+            //problemnineteen();
+            //problemtwenty();
         }
 
         // <><><><><><><><> r actions (read) <><><><><><><><><>
@@ -75,7 +75,14 @@ namespace DatabaseFirstLINQ
         }
 
         private void problemfour()
-        {
+        {   
+            var products = _context.Products;
+
+            var productsWithS = products.Where(products => products.Name.Contains("s"));
+            foreach (var product in productsWithS)
+            {
+                Console.WriteLine(product.Name);
+            }
             // write a linq query that gets each product that contains an "s" in the products name.
             // then print the name of each product from the above query to the console.
 

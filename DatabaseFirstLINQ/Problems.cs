@@ -201,9 +201,19 @@ namespace DatabaseFirstLINQ
             Product newProduct = new Product()
             {
                 Name = "Wrestle Greased Up Midgets",
+<<<<<<< HEAD
+                Description = "Slippery Little Buggers",
+                Price = 5
+            };
+
+            _context.Products.Add(newProduct);
+            _context.SaveChanges();
+
+=======
                 Description = "Slippery little buggers.",
                 Price = 5
             };
+>>>>>>> 3f8988d91c4e1a924e3e037421cb6b89ea40fa0f
 
             _context.Products.Add(newProduct);
             _context.SaveChanges();
@@ -282,6 +292,10 @@ namespace DatabaseFirstLINQ
         {
             // Delete the role relationship from the user who has the email "oda@gmail.com" using LINQ.
 
+            var userRole = _context.UserRoles.Where(ur => ur.User.Email == "oda@gmail.com").SingleOrDefault();
+            _context.UserRoles.Remove(userRole);
+            _context.SaveChanges();
+
         }
 
         private void ProblemNineteen()
@@ -299,6 +313,8 @@ namespace DatabaseFirstLINQ
         private void ProblemTwenty()
         {
             // Delete the user with the email "oda@gmail.com" from the Users table using LINQ.
+
+            
 
         }
 

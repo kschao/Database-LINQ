@@ -80,7 +80,7 @@ namespace DatabaseFirstLINQ
             // Then print the name of each product from the above query to the console.
 
             var products = _context.Products;
-            var prodcutsWithS = products.Where(p => p.Name.Contains("S"));
+            var prodcutsWithS = products.Where(p => p.Name.Contains("s"));
             foreach (var product in prodcutsWithS)
             {
                 Console.WriteLine(product.Name);
@@ -90,6 +90,7 @@ namespace DatabaseFirstLINQ
 
         private void ProblemFive()
         {
+
             // Write a LINQ query that gets all of the users who registered BEFORE 2016
             // Then print each user's email and registration date to the console.
             var users = _context.Users;
@@ -157,7 +158,15 @@ namespace DatabaseFirstLINQ
         }
 
         private void ProblemTen()
-        {
+        {   
+            var selectEmployees = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.Userid);
+
+            var shopCartContents = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => selectEmployees.Contains(ur.UserId));
+
+            foreach(var content in shopCartContents)
+            {
+                Console.WriteLine(content.User.Email + " " + content.Product.Name + " " + content.Product.Price + " " + content.Quantity);
+            }
             // Write a LINQ query that retreives all of the products in the shopping cart of users who have the role of "Employee".
             // Then print the user's email as well as the product's name, price, and quantity to the console.
 
@@ -192,14 +201,12 @@ namespace DatabaseFirstLINQ
             Product newProduct = new Product()
             {
                 Name = "Wrestle Greased Up Midgets",
-                Description = "Slippery Little Buggers",
+                Description = "Slippery little buggers.",
                 Price = 5
             };
 
             _context.Products.Add(newProduct);
             _context.SaveChanges();
-
-
         }
 
         private void ProblemThirteen()

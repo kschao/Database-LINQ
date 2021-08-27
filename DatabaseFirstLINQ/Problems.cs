@@ -61,7 +61,14 @@ namespace DatabaseFirstLINQ
 
         private void problemthree()
         {
+            var products = _context.Products;
             
+            var productValue = products.Where(products => products.Price > 150);
+
+            foreach(var product in productValue)
+            {
+                Console.WriteLine(product.Name + " " + product.Price);
+            }
             // write a linq query that gets each product where the products price is greater than $150.
             // then print the name and price of each product from the above query to the console.
 

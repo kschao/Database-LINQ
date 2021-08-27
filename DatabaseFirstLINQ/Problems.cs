@@ -80,7 +80,7 @@ namespace DatabaseFirstLINQ
             // Then print the name of each product from the above query to the console.
 
             var products = _context.Products;
-            var prodcutsWithS = products.Where(p => p.Name.Contains("S"));
+            var prodcutsWithS = products.Where(p => p.Name.Contains("s"));
             foreach (var product in prodcutsWithS)
             {
                 Console.WriteLine(product.Name);
@@ -90,6 +90,7 @@ namespace DatabaseFirstLINQ
 
         private void ProblemFive()
         {
+
             // Write a LINQ query that gets all of the users who registered BEFORE 2016
             // Then print each user's email and registration date to the console.
 

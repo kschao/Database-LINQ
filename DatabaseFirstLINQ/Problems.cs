@@ -170,13 +170,7 @@ namespace DatabaseFirstLINQ
             // Write a LINQ query that retreives all of the products in the shopping cart of users who have the role of "Employee".
             // Then print the user's email as well as the product's name, price, and quantity to the console.
 
-            var selectEmployees = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.UserId);
-            var shopCartContents = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => selectEmployees.Contains(ur.UserId));
-
-            foreach(var content in shopCartContents)
-            {
-                Console.WriteLine(content.User.Email + " " + content.Product.Price + " " + content.Quantity);
-            }
+           
         }
 
         // <><><><><><><><> CUD (Create, Update, Delete) Actions <><><><><><><><><>
@@ -201,7 +195,6 @@ namespace DatabaseFirstLINQ
             Product newProduct = new Product()
             {
                 Name = "Wrestle Greased Up Midgets",
-<<<<<<< HEAD
                 Description = "Slippery Little Buggers",
                 Price = 5
             };
@@ -209,14 +202,7 @@ namespace DatabaseFirstLINQ
             _context.Products.Add(newProduct);
             _context.SaveChanges();
 
-=======
-                Description = "Slippery little buggers.",
-                Price = 5
-            };
->>>>>>> 3f8988d91c4e1a924e3e037421cb6b89ea40fa0f
 
-            _context.Products.Add(newProduct);
-            _context.SaveChanges();
         }
 
         private void ProblemThirteen()
@@ -348,6 +334,24 @@ namespace DatabaseFirstLINQ
         {
             // Write a query that finds the total of every users shopping cart products using LINQ.
             // Display the total of each users shopping cart as well as the total of the toals to the console.
+
+            var users = _context.Users;
+            var cart = _context.ShoppingCarts.Include(p => p.Product).ToList();
+            decimal totalSum = 0;
+            foreach (var user in users)
+            {
+                decimal sum = 0;
+                foreach (var c in cart)
+                {
+                    if (user.Id == c.UserId)
+                    {
+                        sum += c.Product.Price * Convert.ToDecimal(c.Quantity);
+                    }
+                }
+                Console.WriteLine(user.Id + "--Sum: " + sum);
+                totalSum += sum;
+
+            }
         }
 
         // BIG ONE

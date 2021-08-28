@@ -28,7 +28,7 @@ namespace DatabaseFirstLINQ
             //ProblemEleven();
             //ProblemTwelve(); completed
             //ProblemThirteen();
-            ProblemFourteen();
+            //ProblemFourteen();
             //ProblemFifteen();
             //ProblemSixteen();
             //ProblemSeventeen();
@@ -159,7 +159,7 @@ namespace DatabaseFirstLINQ
 
         private void ProblemTen()
         {   
-            var selectEmployees = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.Userid);
+            var selectEmployees = _context.UserRoles.Include(ur => ur.Role).Where(ur => ur.Role.RoleName == "Employee").Select(ur => ur.UserId);
 
             var shopCartContents = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => selectEmployees.Contains(ur.UserId));
 

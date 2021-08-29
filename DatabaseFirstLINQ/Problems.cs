@@ -357,6 +357,102 @@ namespace DatabaseFirstLINQ
         // BIG ONE
         private void BonusThree()
         {
+            Console.WriteLine("Please enter your email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Please enter your password");
+            string password = Console.ReadLine();
+            var users = _context.Users.ToList();
+            foreach (var user in users)
+            {
+                if (user.Email == email && user.Password == password)
+                {
+                    Console.WriteLine("Signed in!"); ;
+                    bool loop = true;
+                    while (loop)
+                    {
+                        Console.WriteLine(@"Please select an option:
+                                        1-Products in Cart
+                                        2-View all products
+                                        3-Add to cart
+                                        4-Remove item from cart
+                                        5-Exit");
+                        string userInput = Console.ReadLine();
+                        switch (userInput)
+                        {
+                            case "1";
+                                var customerCart = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => ur.User.Email == email);
+                                foreach (ShoppingCart car in customerCart)
+                                {
+                                    Console.WriteLine(customerCart.Product.Name + " " + customerCart.Product.Price + " " + customerCart.Quantity);
+                                }
+                                break;
+                            case "2";
+                                var productsAll = _context.Products;
+                                foreach (var product in productsAll)
+                                {
+                                    Console.WriteLine("All Products");
+                                    Console.WriteLine(product.Name + " " + product.Description + " " + product.Price);
+                                }
+                                break;
+                            case "3";
+                                Console.WriteLine("Please type name of the product of your choice");
+                                string chooseProduct = Console.ReadLine();
+
+                                var customersCart = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => ur.User.Email == email).ToList();
+                                var selectProduct = _context.Products.Where(p => p.Name == chooseProduct).Select(password.Id).SingleOrDefault();
+                                var shoppCart = _context.ShoppingCarts.Include(p => p.Product);
+                                bool breakfor = false;
+
+                                foreach (var cart2 in customersCart)
+                                {
+                                    if (cart2.Product.Name == chooseProduct)
+                                    { 
+                                        customersCart.Quantity +=1;
+                                        _context.ShoppingCarts.Update(customersCart);
+                                        breakfor = true;
+                                    }
+                                 }
+                    if (!breakfor)
+                    {
+                        ShoppingCart newItem = new ShoppingCart()
+                        {
+                            UserId = user.Id,
+                            ProductId = Convert.ToInt32(selectProduct),
+                            Quantity = 1
+                        };
+                        _context.ShoppingCarts.Add(newItem);
+                        _context.SaveChanges();
+                        Console.WriteLine("ItemAdded!");
+                        break;
+                    }
+                    break;
+                case "4":
+                    var productInCartId = _context.ShoppingCarts.Include(p => p.Product).Where (c => c.UserId == user.Id);
+                    var currentProductInCart = _context.Shoppingcarts.Include(p => p.Product);
+                    foreach (var cartObject in currentProductInCart)
+                    {
+                        Console.WriteLine(cartObject.Product.Name);
+                    }
+                    Console.WriteLine("Please enter the item you wish to remove");
+                    string removeItem = Console.ReadLine();
+                    var removeItemId = _context.Products.Where(p => p.Name == removeItem).Select(p => p.Id).SingleOrDefault();
+                    removeItemId = Convert.ToInt32(removeItemId);
+                    var itemRemove = _context.ShoppingCarts.Where(i => i.UserId == user.Id && i.ProductId == removeItem).SingleOrDefault();
+                    _context.Shoppingcarts.Remove(itemRemove);
+                    _context.SaveChanges();
+                
+                case "5":
+                    loop = false;
+                    break;
+                default:
+                    Console.WriteLine("Please select an opton");
+                    break;
+              }
+            }
+       }
+    }
+    Console.WriteLine("Invalid Email or Password"); ;
+    BonusThree();
             // 1. Create functionality for a user to sign in via the console
             // 2. If the user succesfully signs in
             // a. Give them a menu where they perform the following actions within the console

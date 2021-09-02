@@ -379,14 +379,14 @@ namespace DatabaseFirstLINQ
                         string userInput = Console.ReadLine();
                         switch (userInput)
                         {
-                            case "1";
+                            case "1":
                                 var customerCart = _context.ShoppingCarts.Include(ur => ur.User).Include(ur => ur.Product).Where(ur => ur.User.Email == email);
                                 foreach (ShoppingCart car in customerCart)
                                 {
                                     Console.WriteLine(customerCart.Product.Name + " " + customerCart.Product.Price + " " + customerCart.Quantity);
                                 }
                                 break;
-                            case "2";
+                            case "2":
                                 var productsAll = _context.Products;
                                 foreach (var product in productsAll)
                                 {
@@ -394,7 +394,7 @@ namespace DatabaseFirstLINQ
                                     Console.WriteLine(product.Name + " " + product.Description + " " + product.Price);
                                 }
                                 break;
-                            case "3";
+                            case "3":
                                 Console.WriteLine("Please type name of the product of your choice");
                                 string chooseProduct = Console.ReadLine();
 
